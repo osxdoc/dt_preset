@@ -1,6 +1,6 @@
-# DrawThings Configuration Manager
+# DrawThings Presets Manager
 
-A tool for managing DrawThings configurations. With this tool, you can export, import, and delete configurations.
+A tool for managing DrawThings presets. With this tool, you can export, import, and delete presets.
 
 ## Installation
 
@@ -24,18 +24,18 @@ phython config_manager.py
 
 ### Main Functions
 
-1. **Export Configurations**
-   - Select configurations to export
+1. **Export Preset**
+   - Select presets to export
    - By default, they are saved in the `presets` folder
    - Option to specify a custom export path
 
-2. **Import Configurations**
-   - Import configurations from the `presets` folder or a custom path
+2. **Import Preset**
+   - Import presets from the `presets` folder or a custom path
    - Supports .dtp format and legacy .json/.bin format
-   - Shows existing configurations
+   - Shows existing presets
 
-3. **Delete Configurations**
-   - Select configurations to delete
+3. **Delete Preset**
+   - Select presets to delete
    - Confirm the selection
 
 ### Navigation
@@ -62,17 +62,17 @@ You can specify an alternative database path at startup.
 ## File Formats
 
 ### .dtp Format
-Combined format for configurations:
+Combined format for presets:
 - 4-byte integer for metadata length
 - JSON metadata (id, name)
-- Binary configuration data
+- Binary preset data
 
 ### Legacy Format
 - .json file for metadata
-- .bin file for configuration data
+- .bin file for preset data
 
 ## Error Handling
 
 - Checks for database and directory existence
-- Validates configuration files during import
+- Validates preset files during import
 - Displays error messages for common issues

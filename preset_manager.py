@@ -9,7 +9,7 @@ from preset_operations import ConfigSelector, export_configurations, import_conf
 
 __version__ = "1.1.0"
 
-class ConfigManager:
+class PresetManager:
     def __init__(self, db_path: str = os.path.expanduser('~/Library/Containers/com.liuliu.draw-things/Data/Library/Application Support/config.sqlite3')):
         self.db_path = db_path
         self.conn = None
@@ -82,7 +82,7 @@ class ConfigManager:
             raise Exception(f"Error deleting configurations: {e}")
 
 class MenuSystem:
-    def __init__(self, config_manager: ConfigManager):
+    def __init__(self, config_manager: PresetManager):
         self.config_manager = config_manager
         self.screen = None
         self.config_selector = None
@@ -108,16 +108,16 @@ class MenuSystem:
     def show_menu(self) -> int:
         """Display main menu and return selected option"""
         menu_items = [
-            "Export configurations",
-            "Import configurations",
-            "Delete configurations",
+            "Export presets",
+            "Import presets",
+            "Delete presets",
             "Exit"
         ]
         current_row = 0
 
         while True:
             self.screen.clear()
-            self.screen.addstr(0, 0, f"Configuration Manager v{__version__}", curses.A_BOLD)
+            self.screen.addstr(0, 0, f"Preset Manager v{__version__}", curses.A_BOLD)
             
             for idx, item in enumerate(menu_items):
                 x = 2
@@ -153,17 +153,17 @@ class MenuSystem:
         self.config_selector.select_configurations(configs, "Available Configurations")
 
     def handle_export_configurations(self):
-        """Handle exporting configurations"""
+        """Handle exporting presets"""
         configs = self.config_manager.get_configurations()
         if not configs:
             self.screen.clear()
-            self.screen.addstr(0, 0, "No configurations to export", curses.A_BOLD)
+            self.screen.addstr(0, 0, "No presets to export", curses.A_BOLD)
             self.screen.addstr(2, 0, "Press any key to continue...")
             self.screen.refresh()
             self.screen.getch()
             return
 
-        selected_rowids = self.config_selector.select_configurations(configs, "Select Configurations to Export")
+        selected_rowids = self.config_selector.select_configurations(configs, "Select Presets to Export")
         if not selected_rowids:
             return
 
@@ -243,7 +243,7 @@ class MenuSystem:
         self.screen.getch()
 
     def handle_import_configurations(self):
-        """Handle importing configurations"""
+        """Handle importing presets"""
         default_dir = get_presets_dir()
         
         # Ask user if they want to use a custom path
@@ -312,24 +312,24 @@ class MenuSystem:
         self.screen.getch()
 
     def handle_delete_configurations(self):
-        """Handle deleting configurations"""
+        """Handle deleting presets"""
         configs = self.config_manager.get_configurations()
         if not configs:
             self.screen.clear()
-            self.screen.addstr(0, 0, "No configurations to delete", curses.A_BOLD)
+            self.screen.addstr(0, 0, "No presets to delete", curses.A_BOLD)
             self.screen.addstr(2, 0, "Press any key to continue...")
             self.screen.refresh()
             self.screen.getch()
             return
 
-        selected_rowids = self.config_selector.select_configurations(configs, "Select Configurations to Delete")
+        selected_rowids = self.config_selector.select_configurations(configs, "Select Presets to Delete")
         if not selected_rowids:
             return
 
         self.config_manager.delete_configurations(selected_rowids)
 
         self.screen.clear()
-        self.screen.addstr(0, 0, f"Deleted {len(selected_rowids)} configurations", curses.A_BOLD)
+        self.screen.addstr(0, 0, f"Deleted {len(selected_rowids)} presets", curses.A_BOLD)
         self.screen.addstr(2, 0, "Press any key to continue...")
         self.screen.refresh()
         self.screen.getch()
@@ -386,7 +386,7 @@ def main():
         curses.endwin()
 
         # Initialize the main application
-        config_manager = ConfigManager(default_path)
+        config_manager = PresetManager(default_path)
         menu_system = MenuSystem(config_manager)
 
         config_manager.connect()
