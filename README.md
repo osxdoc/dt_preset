@@ -7,7 +7,7 @@ A tool for managing DrawThings presets. With this tool, you can export, import, 
 1. Make sure Python 3.x is installed on your system
 2. Clone this repository:
    ```bash
-   git clone https://github.com/osxdoc/dt_presets.git
+   git clone https://github.com/osxdoc/dt_preset.git
    cd dt_presets
    ```
 3. Install the required dependencies:
