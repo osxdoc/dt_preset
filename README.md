@@ -8,7 +8,7 @@ A tool for managing DrawThings presets. With this tool, you can export, import, 
 2. Clone this repository:
    ```bash
    git clone https://github.com/osxdoc/dt_preset.git
-   cd dt_presets
+   cd dt_preset
    ```
 3. Install the required dependencies:
    ```bash
